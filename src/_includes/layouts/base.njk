@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {#- Title: SEO title if set, brand suffix only when it fits Google's ~65 characters -#}
+  {% set baseTitle = seoTitle or title %}
+  {% if baseTitle %}
+    {% set pageTitle = (baseTitle + " | " + site.name) if (baseTitle | length) + (site.name | length) + 3 <= 65 else baseTitle %}
+  {% else %}
+    {% set pageTitle = site.name + " | " + site.tagline %}
+  {% endif %}
+  {% set pageDesc = description or site.description %}
+  {% set isPost = layout == "layouts/post.njk" %}
+  {% set pageUrl = site.url + page.url %}
+  {% set ogImage = ("https://i.ytimg.com/vi/" + youtubeId + "/maxresdefault.jpg") if youtubeId else (site.url + "/assets/img/og-default.png") %}
+  <title>{{ pageTitle }}</title>
+  <meta name="description" content="{{ pageDesc }}">
+  {% if noindex %}<meta name="robots" content="noindex, follow">{% else %}<meta name="robots" content="index, follow, max-image-preview:large">{% endif %}
+  <link rel="canonical" href="{{ pageUrl }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.name }} master prompts" href="/feed.xml">
+  {% if site.googleSiteVerification %}<meta name="google-site-verification" content="{{ site.googleSiteVerification }}">{% endif %}
+
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:type" content="{{ 'article' if isPost else 'website' }}">
+  <meta property="og:title" content="{{ seoTitle or title or pageTitle }}">
+  <meta property="og:description" content="{{ pageDesc }}">
+  <meta property="og:url" content="{{ pageUrl }}">
+  <meta property="og:image" content="{{ ogImage }}">
+  <meta property="og:image:width" content="{{ '1280' if youtubeId else '1200' }}">
+  <meta property="og:image:height" content="{{ '720' if youtubeId else '630' }}">
+  <meta property="og:image:alt" content="{{ title or site.name }}">
+  {% if isPost %}
+  <meta property="article:published_time" content="{{ page.date | isoDate }}">
+  <meta property="article:modified_time" content="{{ (updated or page.date) | isoDate }}">
+  <meta property="article:section" content="{{ category }}">
+  {% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ ogImage }}">
+  <meta name="theme-color" content="#0c0b10">
+
+  <script>
+    // Apply saved or system theme before paint (no flash)
+    (function () {
+      var t; try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+
+  {#- Structured data for Google -#}
+  {% set org = { "@type": "Organization", "@id": site.url + "/#organization", "name": site.name, "url": site.url + "/", "logo": { "@type": "ImageObject", "url": site.url + "/assets/img/logo-512.png", "width": 512, "height": 512 }, "sameAs": [site.youtube] } %}
+  {% if page.url == "/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {{ org | dump | safe }},
+      {
+        "@type": "WebSite",
+        "@id": "{{ site.url }}/#website",
+        "url": "{{ site.url }}/",
+        "name": {{ site.name | dump | safe }},
+        "description": {{ site.description | dump | safe }},
+        "publisher": { "@id": "{{ site.url }}/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": { "@type": "EntryPoint", "urlTemplate": "{{ site.url }}/blog/?q={search_term_string}" },
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
+  {% endif %}
+  {% if isPost %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {{ org | dump | safe }},
+      {
+        "@type": "BlogPosting",
+        "@id": "{{ pageUrl }}#article",
+        "mainEntityOfPage": "{{ pageUrl }}",
+        "headline": {{ (seoTitle or title) | truncate(110, true, "") | dump | safe }},
+        "description": {{ pageDesc | dump | safe }},
+        "image": ["{{ ogImage }}"],
+        "datePublished": "{{ page.date | isoDate }}",
+        "dateModified": "{{ (updated or page.date) | isoDate }}",
+        "articleSection": {{ (category or "Tutorial") | dump | safe }},
+        "author": { "@id": "{{ site.url }}/#organization" },
+        "publisher": { "@id": "{{ site.url }}/#organization" }{% if youtubeId %},
+        "video": { "@id": "{{ pageUrl }}#video" }{% endif %}
+      },
+      {% if youtubeId %}
+      {
+        "@type": "VideoObject",
+        "@id": "{{ pageUrl }}#video",
+        "name": {{ (youtubeTitle or title) | dump | safe }},
+        "description": {{ pageDesc | dump | safe }},
+        "thumbnailUrl": ["https://i.ytimg.com/vi/{{ youtubeId }}/maxresdefault.jpg", "https://i.ytimg.com/vi/{{ youtubeId }}/hqdefault.jpg"],
+        "uploadDate": "{{ page.date | isoDate }}",
+        "embedUrl": "https://www.youtube.com/embed/{{ youtubeId }}",
+        "contentUrl": "https://www.youtube.com/watch?v={{ youtubeId }}",
+        "publisher": { "@id": "{{ site.url }}/#organization" }
+      },
+      {% endif %}
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site.url }}/" },
+          { "@type": "ListItem", "position": 2, "name": "Master Prompts", "item": "{{ site.url }}/blog/" },
+          { "@type": "ListItem", "position": 3, "name": {{ (category or "Tutorial") | dump | safe }}, "item": "{{ site.url }}/blog/category/{{ (category or 'tutorial') | slug }}/" },
+          { "@type": "ListItem", "position": 4, "name": {{ title | dump | safe }} }
+        ]
+      }
+    ]
+  }
+  </script>
+  {% endif %}
+
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/logo-512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://i.ytimg.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  {% if site.adsenseClient %}
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ site.adsenseClient }}" crossorigin="anonymous"></script>
+  {% endif %}
+</head>
+<body>
+  {% include "partials/header.njk" %}
+  <main id="main">
+    {{ content | safe }}
+  </main>
+  {% include "partials/footer.njk" %}
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

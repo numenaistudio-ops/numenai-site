@@ -1,0 +1,13 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for p in collections.all %}{% if p.url and not p.data.noindex and not p.url.startsWith('/admin') and not p.url.startsWith('/blog/category/') and not p.url.endsWith('.xml') and not p.url.endsWith('.txt') %}
+  <url><loc>{{ site.url }}{{ p.url }}</loc><lastmod>{{ (p.data.updated or p.date) | isoDate }}</lastmod></url>
+{%- endif %}{% endfor %}
+{%- for c in collections.categories %}
+  <url><loc>{{ site.url }}/blog/category/{{ c | slug }}/</loc></url>
+{%- endfor %}
+</urlset>

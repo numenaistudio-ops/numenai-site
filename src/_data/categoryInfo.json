@@ -1,0 +1,37 @@
+{
+  "Cartoon": {
+    "title": "Free AI Cartoon Video Master Prompts",
+    "description": "Free master prompts for making AI cartoon videos with consistent characters: family comedies, retro animal cartoons and animated stories.",
+    "intro": "Animated cartoon shorts are some of the most shared AI videos on YouTube Shorts, TikTok and Reels. Each master prompt below plans the whole video for you, from the story and characters to scene-by-scene image and video prompts, so your characters look the same in every shot."
+  },
+  "Kids": {
+    "title": "Free AI Nursery Rhyme & Kids Video Prompts",
+    "description": "Free master prompts for creating colourful AI nursery rhyme and kids' videos: songs, characters and scenes, made with free AI tools.",
+    "intro": "Kids' songs and nursery rhymes are a huge category on YouTube. These master prompts help you write simple sing-along lyrics, design friendly characters and plan every scene of a bright, child-friendly video."
+  },
+  "Documentary": {
+    "title": "Free AI Documentary Video Master Prompts",
+    "description": "Free master prompts for faceless AI documentary and explainer videos: research, scripts, narration and scene-by-scene visuals.",
+    "intro": "Faceless documentary and explainer channels earn long watch times. These master prompts turn any topic into a researched script, voiceover and a full visual plan, including styles like paper-cut and collage animation."
+  },
+  "Stickman": {
+    "title": "Free AI Stickman Animation Master Prompts",
+    "description": "Free master prompts for making stickman animation and stickman survival story videos with AI, step by step.",
+    "intro": "Stickman videos are simple to make and easy to binge. These master prompts write the scenario, narration and every scene prompt for stickman animations and \"what would you do\" survival stories."
+  },
+  "Ads": {
+    "title": "Free AI Ad & UGC Video Master Prompts",
+    "description": "Free master prompts for creating AI ads, UGC-style videos and product videos with free AI tools.",
+    "intro": "Master prompts for scroll-stopping ads, UGC-style videos and product showcases, planned scene by scene for AI video tools."
+  },
+  "Music Video": {
+    "title": "Free AI Music Video Master Prompts",
+    "description": "Free master prompts for creating AI music videos and visuals cut to your track.",
+    "intro": "Master prompts that turn a song into a full set of AI visuals: concept, scenes and video prompts timed to your music."
+  },
+  "Tutorial": {
+    "title": "Free AI Video Tutorials & Master Prompts",
+    "description": "Step-by-step AI video tutorials with free master prompts.",
+    "intro": "Step-by-step tutorials for making AI videos, each with a free master prompt."
+  }
+}

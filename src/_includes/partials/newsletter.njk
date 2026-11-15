@@ -1,0 +1,15 @@
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <div>
+      <p class="eyebrow">Free every week</p>
+      <h2>Get every new master prompt <em>first</em>.</h2>
+      <p class="muted">One email when a new prompt drops. No spam, unsubscribe anytime.</p>
+    </div>
+    <form class="newsletter-form" name="newsletter" method="POST" data-netlify="true" action="/thanks/">
+      <input type="hidden" name="form-name" value="newsletter">
+      <label class="sr-only" for="nl-email-{{ nlId or 'main' }}">Email address</label>
+      <input id="nl-email-{{ nlId or 'main' }}" type="email" name="email" placeholder="you@email.com" required autocomplete="email">
+      <button class="btn btn-primary" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>

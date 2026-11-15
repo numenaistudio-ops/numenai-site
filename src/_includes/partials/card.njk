@@ -1,0 +1,13 @@
+<article class="card" data-category="{{ post.data.category | slug }}" data-search="{{ post.data.title }} {{ post.data.youtubeTitle }} {{ post.data.description }} {{ post.data.category }} {{ post.data.youtubeId }}">
+  <a class="card-link" href="{{ post.url }}">
+    <div class="card-thumb">
+      <img src="{{ post.data | thumb }}" alt="{{ post.data.title }}" loading="lazy" width="480" height="360">
+      <span class="badge">{{ post.data.category }}</span>
+    </div>
+    <div class="card-body">
+      <h3>{{ post.data.title }}</h3>
+      <p class="muted">{{ post.data.description }}</p>
+      <span class="card-cta">Get the free prompt <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>

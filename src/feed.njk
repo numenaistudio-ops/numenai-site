@@ -1,0 +1,27 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>{{ site.name }}: Free AI Video Master Prompts</title>
+  <link>{{ site.url }}/</link>
+  <atom:link href="{{ site.url }}/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>{{ site.description }}</description>
+  <language>en</language>
+  {%- set newest = collections.posts | first %}
+  <lastBuildDate>{{ newest.date.toUTCString() if newest else "" }}</lastBuildDate>
+  {%- for post in collections.posts | limit(20) %}
+  <item>
+    <title>{{ post.data.title }}</title>
+    <link>{{ site.url }}{{ post.url }}</link>
+    <guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
+    <pubDate>{{ post.date.toUTCString() }}</pubDate>
+    <category>{{ post.data.category }}</category>
+    <description>{{ post.data.description }}</description>
+    <enclosure url="https://i.ytimg.com/vi/{{ post.data.youtubeId }}/hqdefault.jpg" type="image/jpeg" length="0"/>
+  </item>
+  {%- endfor %}
+</channel>
+</rss>

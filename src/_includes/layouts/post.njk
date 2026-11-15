@@ -1,0 +1,116 @@
+---
+layout: layouts/base.njk
+---
+<article>
+  <header class="container post-hero">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Master Prompts</a> / <a href="/blog/category/{{ category | slug }}/">{{ category }}</a></nav>
+    <h1>{{ title }}</h1>
+    <div class="post-meta">
+      <span class="badge badge-new">{{ category }}</span>
+      <time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time>
+      <span>{{ content | readingTime }}</span>
+      <button class="btn btn-ghost btn-sm share" type="button" data-share data-title="{{ title }}">
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13"/></svg>
+        Share
+      </button>
+    </div>
+  </header>
+
+  <div class="container post-layout">
+    <div>
+      {% if youtubeId %}
+      <div class="video" data-yt="{{ youtubeId }}">
+        <button type="button" aria-label="Play video: {{ title }}">
+          <img src="https://i.ytimg.com/vi/{{ youtubeId }}/maxresdefault.jpg" alt="{{ title }}" width="1280" height="720" fetchpriority="high">
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+        </button>
+      </div>
+      {% endif %}
+
+      {% if prompt %}
+      <section class="prompt-box" id="prompt" aria-labelledby="prompt-title">
+        <div class="prompt-head">
+          <div>
+            <h2 id="prompt-title">{{ promptTitle or "The Master Prompt" }}</h2>
+            <p class="muted">Free. Copy it into Claude or Gemini and follow the video.</p>
+          </div>
+          <div class="prompt-actions">
+            <button class="btn btn-primary btn-sm" type="button" data-copy="#prompt-text">Copy prompt</button>
+          </div>
+        </div>
+        <div class="prompt-body">
+          <pre id="prompt-text">{{ prompt }}</pre>
+        </div>
+        <div class="prompt-expand"><button type="button" data-expand>Show full prompt</button></div>
+        {% set dlName = "NumenAI-Studio-" + page.fileSlug + "-master-prompt" %}
+        <div class="prompt-download">
+          <div class="prompt-download-text">
+            <strong>Download the full master prompt</strong>
+            <span class="muted">{% if promptDocx or promptPdf %}Formatted, ready to save, print or open in Word &amp; Google Docs.{% else %}Save it as a text file.{% endif %}</span>
+          </div>
+          <div class="prompt-download-buttons">
+            {% if promptDocx %}
+            <a class="dl-btn" href="{{ promptDocx }}" download="{{ dlName }}.docx">
+              <span class="dl-icon dl-word" aria-hidden="true">W</span>
+              <span><b>Word</b><small>.docx · {{ promptDocx | fileSize }}</small></span>
+            </a>
+            {% endif %}
+            {% if promptPdf %}
+            <a class="dl-btn" href="{{ promptPdf }}" download="{{ dlName }}.pdf">
+              <span class="dl-icon dl-pdf" aria-hidden="true">PDF</span>
+              <span><b>PDF</b><small>.pdf · {{ promptPdf | fileSize }}</small></span>
+            </a>
+            {% endif %}
+            <button class="dl-btn" type="button" data-download="#prompt-text" data-filename="{{ dlName }}.txt">
+              <span class="dl-icon dl-txt" aria-hidden="true">TXT</span>
+              <span><b>Text</b><small>.txt · plain</small></span>
+            </button>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+
+      <div class="prose">
+        {{ content | safe }}
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <div class="sidebar-sticky">
+        {% if tools %}
+        <div class="side-card">
+          <h3>Tools used</h3>
+          <ul class="tool-list">
+            {% for t in tools %}
+            <li>{% if t.url %}<a href="{{ t.url }}" target="_blank" rel="noopener sponsored">{{ t.name }} <small>{{ t.note or "Open ↗" }}</small></a>{% else %}<span>{{ t.name }} <small>{{ t.note }}</small></span>{% endif %}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <div class="side-card">
+          <h3>New prompts weekly</h3>
+          <p class="muted" style="font-size:15px">Subscribe on YouTube so you never miss a master prompt.</p>
+          <a class="btn btn-yt" style="width:100%" href="{{ site.youtubeSubscribe }}" target="_blank" rel="noopener">Subscribe on YouTube</a>
+        </div>
+        {# Ad slot: only shown once adsenseClient is set in site.json (replace with your AdSense ad unit) #}
+        {% if site.adsenseClient %}<div class="ad-slot" aria-hidden="true">Ad space</div>{% endif %}
+      </div>
+    </aside>
+  </div>
+</article>
+
+{% set nlId = "post" %}
+{% include "partials/newsletter.njk" %}
+
+<section class="container related">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Keep creating</p>
+      <h2>More master prompts</h2>
+    </div>
+    <a class="link-arrow" href="/blog/">See all →</a>
+  </div>
+  <div class="grid">
+    {% for post in collections.posts | related(page.url) %}{% include "partials/card.njk" %}{% endfor %}
+  </div>
+</section>

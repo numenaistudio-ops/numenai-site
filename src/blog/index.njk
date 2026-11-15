@@ -1,0 +1,38 @@
+---
+layout: layouts/base.njk
+title: Free AI Video Master Prompts
+description: Every NumenAI Studio master prompt in one place. Copy a prompt, follow the video tutorial and create viral AI videos for free.
+---
+<section class="container page-hero">
+  <p class="eyebrow">The prompt library</p>
+  <h1>Free <em>master prompts</em></h1>
+  <p class="muted">One prompt, one complete AI video. Search for the video you watched, copy the prompt and follow the tutorial.</p>
+
+  <form class="search-big" role="search" action="/blog/" onsubmit="return false">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm10 2-4.35-4.35"/></svg>
+    <label class="sr-only" for="search">Search by YouTube video title</label>
+    <input id="search" name="q" type="search" placeholder="Search by YouTube video title, e.g. “family cartoon”" autocomplete="off">
+    <button type="button" class="search-clear" aria-label="Clear search" hidden>×</button>
+  </form>
+  <p class="search-hint muted">Watched a video? Type any words from its YouTube title, or paste the video link.</p>
+
+  <div class="filters" role="group" aria-label="Filter by style">
+    <a class="chip" href="/blog/" data-filter="all" aria-pressed="true">All</a>
+    {% for cat in collections.categories %}
+    <a class="chip" href="/blog/category/{{ cat | slug }}/" data-filter="{{ cat | slug }}" aria-pressed="false">{{ cat }}</a>
+    {% endfor %}
+    <span class="result-count muted" id="result-count" aria-live="polite"></span>
+  </div>
+</section>
+
+<section class="container" style="padding-bottom:88px">
+  <div class="grid" id="post-grid" data-page-size="{{ site.postsPerPage }}">
+    {% for post in collections.posts %}{% include "partials/card.njk" %}{% endfor %}
+  </div>
+  <nav class="pager" id="pager" aria-label="Prompt pages" hidden></nav>
+  <p class="pager-info muted" id="pager-info"></p>
+  <div class="empty" id="empty">
+    <p class="muted">No master prompt matches “<span id="empty-q"></span>” yet.</p>
+    <a class="btn btn-ghost" id="empty-yt" href="{{ site.youtube }}/search" target="_blank" rel="noopener">Search the YouTube channel instead</a>
+  </div>
+</section>

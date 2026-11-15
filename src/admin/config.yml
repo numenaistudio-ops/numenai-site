@@ -1,0 +1,54 @@
+# NumenAI Studio dashboard (Decap CMS)
+# Live: log in with GitHub at yoursite.com/admin
+# Local: run `npm run cms` in one terminal and `npm start` in another, then open localhost:8080/admin
+backend:
+  name: github
+  repo: numenaistudio-ops/numenai-site
+  branch: main
+
+local_backend: true
+
+site_url: https://numenaistudio.com
+logo_url: /assets/img/favicon.svg
+media_folder: src/assets/img/uploads
+public_folder: /assets/img/uploads
+
+collections:
+  - name: posts
+    label: Master Prompt Posts
+    label_singular: Master Prompt Post
+    folder: src/blog/posts
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: [date, title]
+    summary: "{{title}} ({{category}})"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: "Google title (optional, 45-60 characters, shown in search results)", name: seoTitle, widget: string, required: false }
+      - { label: "Short description (shown on cards & Google)", name: description, widget: text }
+      - { label: Publish date, name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "YouTube video ID (the part after watch?v=)", name: youtubeId, widget: string, hint: "e.g. zKmWi-Qb7Xs" }
+      - { label: "Exact YouTube video title (so people can search for it)", name: youtubeTitle, widget: string, required: false }
+      - label: Category
+        name: category
+        widget: select
+        options: [Cartoon, Kids, Documentary, Stickman, Ads, Music Video, Tutorial]
+      - { label: "Custom thumbnail (optional, otherwise YouTube thumbnail)", name: thumbnail, widget: image, required: false }
+      - { label: Prompt box title, name: promptTitle, widget: string, required: false, default: "The Master Prompt" }
+      - { label: Master prompt, name: prompt, widget: text }
+      - { label: "Master prompt as Word file (optional, adds a Word download button)", name: promptDocx, widget: file, required: false, media_folder: "/src/assets/prompts", public_folder: "/assets/prompts" }
+      - { label: "Master prompt as PDF (optional, adds a PDF download button)", name: promptPdf, widget: file, required: false, media_folder: "/src/assets/prompts", public_folder: "/assets/prompts" }
+      - label: Tools used
+        name: tools
+        widget: list
+        required: false
+        fields:
+          - { label: Tool name, name: name, widget: string }
+          - { label: "Link (affiliate link welcome)", name: url, widget: string, required: false }
+          - { label: Short note, name: note, widget: string, required: false }
+      - { label: "Lock this article (automation will never rewrite it)", name: articleLocked, widget: boolean, required: false, default: false }
+      - { label: Written guide, name: body, widget: markdown }
+      - { name: autoImported, widget: hidden, required: false }
+      - { name: articleSource, widget: hidden, required: false }
+      - { name: articleHash, widget: hidden, required: false }
+      - { name: promptDocId, widget: hidden, required: false }

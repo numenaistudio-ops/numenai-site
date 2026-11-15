@@ -1,0 +1,33 @@
+# Checks the YouTube channel every 15 minutes (or press "Run workflow" on GitHub to run it now). New videos with a prompt Doc in the Drive folder become posts,
+# and edited Docs update their prompt. Any change is committed, which makes Netlify rebuild the site.
+name: Sync YouTube master prompts
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: node scripts/sync-youtube.mjs
+        env:
+          # Free key from Google AI Studio, stored in GitHub → Settings → Secrets → Actions
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - name: Commit changes
+        run: |
+          if [ -n "$(git status --porcelain src/blog/posts src/assets/prompts)" ]; then
+            git config user.name "numenai-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add src/blog/posts src/assets/prompts
+            git commit -m "Sync master prompts from YouTube"
+            git push
+          else
+            echo "No changes"
+          fi

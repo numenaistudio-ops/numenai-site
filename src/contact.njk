@@ -1,0 +1,106 @@
+---
+layout: layouts/base.njk
+title: Contact
+description: Work with NumenAI Studio. AI UGC ads, product videos, animated stories, music videos and brand collaborations.
+permalink: /contact/
+---
+<section class="container page-hero">
+  <p class="eyebrow">Contact</p>
+  <h1>Let's make something <em>unforgettable</em>.</h1>
+  <p class="muted">Tell us about your project, whether it's UGC ads, a product video, an animated series or a YouTube collaboration. We usually reply within 24–48 hours.</p>
+</section>
+
+<section class="container contact-layout">
+  <form class="contact-form" name="contact" method="POST" action="/message-sent/" data-netlify="true" netlify-honeypot="company_website">
+    <input type="hidden" name="form-name" value="contact">
+    <p class="hp" aria-hidden="true"><label>Leave this empty <input name="company_website" tabindex="-1" autocomplete="off"></label></p>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="c-name">Your name <span aria-hidden="true">*</span></label>
+        <input id="c-name" name="name" type="text" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="c-email">Email <span aria-hidden="true">*</span></label>
+        <input id="c-email" name="email" type="email" required autocomplete="email">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="c-company">Brand / company <small>(optional)</small></label>
+        <input id="c-company" name="company" type="text" autocomplete="organization">
+      </div>
+      <div class="field">
+        <label for="c-website">Website or social link <small>(optional)</small></label>
+        <input id="c-website" name="website" type="text" inputmode="url" placeholder="https://">
+      </div>
+    </div>
+
+    <fieldset class="field">
+      <legend>What do you need? <span aria-hidden="true">*</span></legend>
+      <div class="pill-options">
+        {% set services = [
+          ["ugc", "UGC-style ads"], ["product", "Product videos"], ["animated", "Animated stories"],
+          ["music", "Music videos"], ["collab", "YouTube collab / sponsorship"], ["other", "Something else"]
+        ] %}
+        {% for s in services %}
+        <label class="pill"><input type="radio" name="service" value="{{ s[1] }}" data-key="{{ s[0] }}" {% if loop.first %}required{% endif %}><span>{{ s[1] }}</span></label>
+        {% endfor %}
+      </div>
+    </fieldset>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="c-budget">Budget</label>
+        <select id="c-budget" name="budget">
+          <option value="">Select a range</option>
+          <option>Under $500</option>
+          <option>$500 – $1,500</option>
+          <option>$1,500 – $5,000</option>
+          <option>$5,000+</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="c-timeline">Timeline</label>
+        <select id="c-timeline" name="timeline">
+          <option value="">When do you need it?</option>
+          <option>As soon as possible</option>
+          <option>Within 2 weeks</option>
+          <option>Within a month</option>
+          <option>Flexible</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="c-message">Tell us about your project <span aria-hidden="true">*</span></label>
+      <textarea id="c-message" name="message" rows="6" required minlength="20" placeholder="What are you promoting, where will the video run, and what style do you like?"></textarea>
+    </div>
+
+    <button class="btn btn-primary btn-lg" type="submit">Send message</button>
+    <p class="form-note muted">By sending this form you agree to our <a href="/privacy/">privacy policy</a>. We never share your details.</p>
+  </form>
+
+  <aside class="contact-side">
+    <div class="side-card">
+      <h3>Email us directly</h3>
+      <a class="contact-email" href="mailto:{{ site.email }}">{{ site.email }}</a>
+      <p class="muted">Best for business inquiries and partnerships.</p>
+    </div>
+    <div class="side-card">
+      <h3>What happens next</h3>
+      <ol class="next-steps">
+        <li><strong>We reply</strong> within 24–48 hours with questions or ideas.</li>
+        <li><strong>Quick call or chat</strong> to agree on style, scope and price.</li>
+        <li><strong>We create</strong> your videos, with revisions included.</li>
+      </ol>
+    </div>
+    <div class="side-card">
+      <h3>Just have a question about a prompt?</h3>
+      <p class="muted">The fastest way is a comment on the YouTube video. We read every one.</p>
+      <a class="btn btn-ghost btn-sm" href="{{ site.youtube }}" target="_blank" rel="noopener">Go to YouTube</a>
+    </div>
+  </aside>
+</section>

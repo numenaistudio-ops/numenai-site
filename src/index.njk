@@ -1,0 +1,103 @@
+---
+layout: layouts/base.njk
+title: "Free AI Video Master Prompts & Tutorials"
+description: "Free master prompts and step-by-step tutorials for viral AI videos: cartoons, documentaries, stickman and kids' songs with Claude, Gemini and Flow."
+---
+{% set latest = collections.posts | limit(1) %}
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">AI filmmaking, without the guesswork</p>
+      <h1>Turn one idea into a <em>cinematic</em> AI video.</h1>
+      <p class="lead">Free master prompts and step-by-step tutorials for viral AI cartoons, documentaries, stickman stories and kids' songs, built with Claude, Gemini, Google Flow, ElevenLabs and more.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary btn-lg" href="/blog/">Get free master prompts</a>
+        <a class="btn btn-ghost btn-lg" href="{{ site.youtube }}" target="_blank" rel="noopener">Watch on YouTube</a>
+      </div>
+      <ul class="hero-stats">
+        <li><strong>{{ collections.posts.length }}</strong><span>free master prompts</span></li>
+        <li><strong>100%</strong><span>free-tier friendly</span></li>
+        <li><strong>1</strong><span>prompt per full video</span></li>
+      </ul>
+    </div>
+    {% for post in latest %}
+    <a class="hero-feature" href="{{ post.url }}">
+      <div class="hero-feature-media">
+        <img src="https://i.ytimg.com/vi/{{ post.data.youtubeId }}/maxresdefault.jpg" alt="{{ post.data.title }}" width="1280" height="720" fetchpriority="high">
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></span>
+      </div>
+      <div class="hero-feature-body">
+        <span class="badge badge-new">New prompt</span>
+        <h2>{{ post.data.title }}</h2>
+        <span class="card-cta">Open the prompt <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="tools-strip" aria-label="Tools we teach">
+  <div class="container tools-row">
+    <span class="muted">Workflows for</span>
+    <span>Claude</span><span>ChatGPT</span><span>Gemini</span><span>Google Flow</span><span>ElevenLabs</span><span>Suno</span><span>CapCut</span><span>Filmora</span>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Latest master prompts</p>
+      <h2>Copy the prompt. Make the video.</h2>
+    </div>
+    <a class="link-arrow" href="/blog/">See all prompts →</a>
+  </div>
+  <div class="grid">
+    {% for post in collections.posts | limit(3) %}{% include "partials/card.njk" %}{% endfor %}
+  </div>
+</section>
+
+<section id="how" class="section container">
+  <div class="section-head center">
+    <div>
+      <p class="eyebrow">How it works</p>
+      <h2>From idea to finished video in three steps</h2>
+    </div>
+  </div>
+  <ol class="steps">
+    <li>
+      <span class="step-num">01</span>
+      <h3>Watch the tutorial</h3>
+      <p class="muted">Every prompt comes with a full YouTube walkthrough, from the first idea to the final edit.</p>
+    </li>
+    <li>
+      <span class="step-num">02</span>
+      <h3>Copy the master prompt</h3>
+      <p class="muted">One prompt gives you the story, scene breakdown, image prompts, video prompts and captions.</p>
+    </li>
+    <li>
+      <span class="step-num">03</span>
+      <h3>Generate &amp; publish</h3>
+      <p class="muted">Create consistent characters and scenes with free-tier tools, edit, and post your video.</p>
+    </li>
+  </ol>
+</section>
+
+{% include "partials/newsletter.njk" %}
+
+<section id="services" class="section container">
+  <div class="services">
+    <div class="services-copy">
+      <p class="eyebrow">For brands &amp; businesses</p>
+      <h2>Need AI videos made <em>for</em> you?</h2>
+      <p class="muted">We create scroll-stopping AI content for brands: UGC-style ads, product videos, animated stories and music videos. Now taking a limited number of projects.</p>
+      <a class="btn btn-primary" href="/contact/">Start a project</a>
+    </div>
+    <ul class="services-list">
+      <li><a class="service-link" href="/contact/?service=ugc"><h3>UGC-style ads <span aria-hidden="true">→</span></h3><p class="muted">AI creator-style ads for TikTok, Reels and Shorts.</p></a></li>
+      <li><a class="service-link" href="/contact/?service=product"><h3>Product videos <span aria-hidden="true">→</span></h3><p class="muted">Cinematic product shots and launch videos.</p></a></li>
+      <li><a class="service-link" href="/contact/?service=animated"><h3>Animated stories <span aria-hidden="true">→</span></h3><p class="muted">Consistent characters and series for your brand.</p></a></li>
+      <li><a class="service-link" href="/contact/?service=music"><h3>Music videos <span aria-hidden="true">→</span></h3><p class="muted">AI visuals cut to your track.</p></a></li>
+    </ul>
+  </div>
+</section>

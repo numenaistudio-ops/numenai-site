@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.categories
+  size: 1
+  alias: cat
+permalink: "/blog/category/{{ cat | slug }}/"
+eleventyComputed:
+  title: "{{ categoryInfo[cat].title or ('Free AI ' + cat + ' Video Master Prompts') }}"
+  description: "{{ categoryInfo[cat].description or site.description }}"
+---
+{% set catPosts = collections.posts | byCategory(cat) %}
+<section class="container page-hero">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Master Prompts</a> / {{ cat }}</nav>
+  <p class="eyebrow">{{ catPosts.length }} free master prompt{{ "s" if catPosts.length != 1 }}</p>
+  <h1>Free AI <em>{{ cat | lower }}</em> master prompts</h1>
+  <p class="muted">{{ categoryInfo[cat].intro or "" }}</p>
+  <div class="filters" aria-label="Browse by style">
+    <a class="chip" href="/blog/">All</a>
+    {% for c in collections.categories %}
+    <a class="chip" href="/blog/category/{{ c | slug }}/" {% if c == cat %}aria-current="page"{% endif %}>{{ c }}</a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container" style="padding-bottom:88px">
+  <div class="grid">
+    {% for post in catPosts %}{% include "partials/card.njk" %}{% endfor %}
+  </div>
+  <p class="muted" style="text-align:center;margin-top:40px">Looking for a specific video? <a class="link-arrow" href="/blog/">Search all master prompts →</a></p>
+</section>
