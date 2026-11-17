@@ -8,6 +8,7 @@ category: Tutorial
 autoImported: true
 promptDocId: 1tLeXUgYIiRXh175JZX-X2betv_43KnAP9wg6rJn1iL4
 articleSource: description
+articleLocked: true
 articleHash: 601a8d90e02f
 promptDocx: /assets/prompts/hollywood-style-ai-micro-dramas.docx
 promptPdf: /assets/prompts/hollywood-style-ai-micro-dramas.pdf
