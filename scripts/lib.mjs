@@ -53,7 +53,8 @@ const decode = (s) =>
   s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 const tag = (xml, name) => { const m = xml.match(new RegExp(`<${name}[^>]*>([\\s\\S]*?)</${name}>`)); return m ? decode(m[1]) : ""; };
 export async function getFeed() {
-  const res = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${site.youtubeChannelId}`);
+  // YouTube caches the feed for up to 15 minutes; a unique "_" value asks for a fresh copy so new uploads show up at once
+  const res = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${site.youtubeChannelId}&_=${Date.now()}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`YouTube feed request failed: HTTP ${res.status}`);
   const xml = await res.text();
   return xml.split("<entry>").slice(1).map((e) => ({
